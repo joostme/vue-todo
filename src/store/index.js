@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { ActionType, MutationType, GetterType } from './types'
+import ApiService from '../api/api-service'
 
 Vue.use(Vuex)
 
@@ -14,9 +15,17 @@ const store = new Vuex.Store({
         },
         [ActionType.Toggle_Todo]: ({ commit }, todo) => {
             commit(MutationType.Toggle_Todo, todo)
+        },
+        [ActionType.Load_Todos]: ({ commit }) => {
+            ApiService.getAllTodos()
+                .then(response => commit(MutationType.Todos_Loaded, response.data))
+                .catch(error => console.log(error))
         }
     },
     mutations: {
+        [MutationType.Todos_Loaded]: (state, todos) => {
+            state.todos = todos
+        },
         [MutationType.Add_Todo]: (state, todo) => {
             state.todos.push(Object.assign({ id: state.todos.length + 1, done: false }, todo))
         },
@@ -33,9 +42,5 @@ const store = new Vuex.Store({
         }
     }
 })
-
-store.dispatch(ActionType.Add_Todo, { name: 'Check out VueJS' })
-store.dispatch(ActionType.Add_Todo, { name: 'Make some coffee' })
-store.dispatch(ActionType.Add_Todo, { name: 'Check out Vuex' })
 
 export default store

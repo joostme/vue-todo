@@ -5,8 +5,12 @@
 </template>
 
 <script>
+import { ActionType } from './store/types'
 export default {
-    name: 'app'
+    name: 'app',
+    created() {
+        this.$store.dispatch(ActionType.Load_Todos)
+    }
 }
 </script>
 

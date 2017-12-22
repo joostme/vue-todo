@@ -1,0 +1,16 @@
+[{
+        "id": 1,
+        "name": "Check out VueJS",
+        "done": false
+    },
+    {
+        "id": 2,
+        "name": "Check out Vuex",
+        "done": false
+    },
+    {
+        "id": 3,
+        "name": "Make coffee",
+        "done": true
+    }
+]
