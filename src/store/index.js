@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { ActionType, MutationType, GetterType } from './types'
 
 Vue.use(Vuex)
 
@@ -8,31 +9,33 @@ const store = new Vuex.Store({
         todos: []
     },
     actions: {
-        ADD_TODO({ commit }, todo) {
-            commit('ADD_TODO', todo)
+        [ActionType.Add_Todo]: ({ commit }, todo) => {
+            commit(MutationType.Add_Todo, todo)
         },
-        TOGGLE_TODO({ commit }, todo) {
-            commit('TOGGLE_TODO', todo)
+        [ActionType.Toggle_Todo]: ({ commit }, todo) => {
+            commit(MutationType.Toggle_Todo, todo)
         }
     },
     mutations: {
-        ADD_TODO(state, todo) {
+        [MutationType.Add_Todo]: (state, todo) => {
             state.todos.push(Object.assign({ id: state.todos.length + 1, done: false }, todo))
         },
-        TOGGLE_TODO(state, todo) {
+        [MutationType.Toggle_Todo]: (state, todo) => {
             todo.done = !todo.done
         }
     },
     getters: {
-        getTodos(state) {
-            return state.todos
+        [GetterType.GetDoneTodos]: (state, getters) => {
+            return state.todos.filter(todo => todo.done)
+        },
+        [GetterType.GetOpenTodos]: (state, getters) => {
+            return state.todos.filter(todo => !todo.done)
         }
     }
 })
 
-store.dispatch('ADD_TODO', { name: 'Check out VueJS' })
-store.dispatch('ADD_TODO', { name: 'Make some coffee' })
-store.dispatch('ADD_TODO', { name: 'Check out Vuex' })
-
+store.dispatch(ActionType.Add_Todo, { name: 'Check out VueJS' })
+store.dispatch(ActionType.Add_Todo, { name: 'Make some coffee' })
+store.dispatch(ActionType.Add_Todo, { name: 'Check out Vuex' })
 
 export default store

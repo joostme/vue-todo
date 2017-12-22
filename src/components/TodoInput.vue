@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { ActionType } from '@/store/types'
+
 export default {
     name: 'TodoInput',
     data() {
@@ -23,7 +25,7 @@ export default {
     },
     methods: {
         addTodo() {
-            this.$store.dispatch('ADD_TODO', { name: this.todoName })
+            this.$store.dispatch(ActionType.Add_Todo, { name: this.todoName })
         }
     }
 }
