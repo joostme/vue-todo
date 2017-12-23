@@ -1,8 +1,13 @@
 # vue-todo
 
-> A Vue Todo App with Vuex
+> A simple Todo App with
+[Vue](https://vuejs.org/), 
+[Vuex](https://vuex.vuejs.org/en/), 
+[Vue-Router](https://router.vuejs.org/en/), 
+[Axios](https://github.com/axios/axios) and 
+[Bulma](https://bulma.io/)
 
-## Build Setup
+## Run
 
 ``` bash
 # install dependencies
@@ -10,12 +15,4 @@ npm install
 
 # serve with hot reload at localhost:8080
 npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
