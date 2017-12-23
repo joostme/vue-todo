@@ -2,7 +2,7 @@
     <div>
         <TodoInput/>
         <ul>
-            <li class="box" v-for="todo in todos" v-bind:key="todo.id">
+            <li class="box" v-for="todo in todos" v-bind:key="todo.id" @click="openDetail(todo)">
                 <div class="level">
                     <div class="level-left">
                         {{ todo.name }}
@@ -16,7 +16,7 @@
             </li>
             <div class="empty" v-if="todos.length === 0">No open Todos. Yay :)</div>
             <hr v-if="doneTodos.length > 0">
-            <li class="box done" v-for="todo in doneTodos" v-bind:key="todo.id">
+            <li class="box done" v-for="todo in doneTodos" v-bind:key="todo.id" @click="openDetail(todo)">
                 <div class="level">
                     <div class="level-left">
                         {{ todo.name }}
@@ -49,6 +49,9 @@ export default {
     methods: {
         toggleTodo(todo) {
             this.$store.dispatch(ActionType.Toggle_Todo, todo)
+        },
+        openDetail(todo) {
+            this.$router.push({ path: `todos/${todo.id}` })
         }
     },
     components: {
@@ -58,6 +61,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.box
+    cursor: pointer
 .done
   background-color: #cccccc
 

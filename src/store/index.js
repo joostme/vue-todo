@@ -7,7 +7,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        todos: []
+        todos: [],
+        selectedTodoId: null
     },
     actions: {
         [ActionType.Add_Todo]: ({ commit }, todo) => {
@@ -20,6 +21,9 @@ const store = new Vuex.Store({
             ApiService.getAllTodos()
                 .then(response => commit(MutationType.Todos_Loaded, response.data))
                 .catch(error => console.log(error))
+        },
+        [ActionType.Select_Todo]: ({ commit }, todoId) => {
+            commit(MutationType.Select_Todo, todoId)
         }
     },
     mutations: {
@@ -31,14 +35,20 @@ const store = new Vuex.Store({
         },
         [MutationType.Toggle_Todo]: (state, todo) => {
             todo.done = !todo.done
+        },
+        [MutationType.Select_Todo]: (state, todoId) => {
+            state.selectedTodoId = todoId
         }
     },
     getters: {
-        [GetterType.GetDoneTodos]: (state, getters) => {
+        [GetterType.GetDoneTodos]: state => {
             return state.todos.filter(todo => todo.done)
         },
-        [GetterType.GetOpenTodos]: (state, getters) => {
+        [GetterType.GetOpenTodos]: state => {
             return state.todos.filter(todo => !todo.done)
+        },
+        [GetterType.GetSelectedTodo]: state => {
+            return state.todos[state.selectedTodoId - 1]
         }
     }
 })
